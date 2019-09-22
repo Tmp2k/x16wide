@@ -1,6 +1,8 @@
 # X16WIDE
 *a web IDE for Commander X16*
 
+Early demo here -> https://x16wide.tmp2k.com
+
 ## What is the aim of this project?
 
 To provide a development environment that:
@@ -32,7 +34,7 @@ To provide a development environment that:
   ## Roadmap
   
   ### Now: Gauge interest / select features
-  See who's on board and what the community want's form this project.
+  See who's on board and what the community want's from this project. If you're interested in working on this please drop me an email on steven@nemiah.uk. Anyone with experience with emscripten would be a huge bonus!
   
   ### Then: Build BASIC only version without compilers
   Build a version that just allows people to code in BASIC but includes examples and demos and allows people to share their own code with a single click.
