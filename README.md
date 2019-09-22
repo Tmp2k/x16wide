@@ -1,2 +1,46 @@
-# x16wide
-Commander X16 Web IDE
+# X16WIDE
+*a web IDE for Commander X16*
+
+## What is the aim of this project?
+
+To provide a development environment that:
+  * requires no setup or pre-requisites
+  * is quick an easy to use
+  * allows people to view demo/examples and quickly share their code
+  * can be used to develop in BASIC, assembly and C
+  * export to file for use with a Commander X16
+  
+  
+## Proposed features
+  * Compatible with all major browsers on desktop and mobile
+  * Fully-featured code editor
+    * syntax highlighting
+    * code completion
+    * structure highlighting and folding
+    * context menus
+    * remuneration and formatting tools
+    * PETSCII char keyboard
+  * Built in compilers/assemblers - write code in interpreted BASIC, compiled BASIC, asm or other high-level languages like C
+  * Multiple tabs/files for includes
+  * Ability to share code with a single URL
+  * Repository of demos, tutorials and examples
+  * Shared public code repository / library
+  * Image/sprite editor with export to bin files or automatic inclusion in code
+  * Music editor
+  * Level/map builder
+  
+  ## Roadmap
+  
+  ### Now: Gauge interest / select features
+  See who's on board and what the community want's form this project.
+  
+  ### Then: Build BASIC only version without compilers
+  Build a version that just allows people to code in BASIC but includes examples and demos and allows people to share their own code with a single click.
+  
+  ### Then: add the ability to load .prg 
+  
+  ### Then: add assemblers/compilers and support for ASM, C etc
+  
+  ### Then: add multiple tabs/files and code editor features
+  
+  ### Way down the road: add sprite editors and other utils
