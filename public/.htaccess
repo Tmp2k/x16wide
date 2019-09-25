@@ -1,0 +1,27 @@
+<IfModule mod_rewrite.c>
+
+
+    RewriteEngine On
+
+    #domain aliases redirection
+    RewriteCond %{HTTP_Host} ^(www\.)?x16\.io$ [NC]
+    RewriteRule ^(.*)$ https://x16.tmp2k.com/$1 [L,R=301]
+    RewriteCond %{HTTP_Host} ^x16wide\.tmp2k\.com$ [NC]
+    RewriteRule ^(.*)$ https://x16.tmp2k.com/$1 [L,R=301]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)/$ /$1 [L,R=301]
+
+    # API
+    RewriteRule ^api/share(/([A-Za-z]+))?/?$ api/share.php?id=$2
+
+
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^([^\./]+)/?$ index.html
+
+
+</IfModule>

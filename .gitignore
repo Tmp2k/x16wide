@@ -1,0 +1,8 @@
+.DS_STORE
+.vagrant
+.idea
+node_modules
+.sass-cache
+Thumbs.db
+.htpasswd
+shared-code/*

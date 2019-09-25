@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Commander X16 Emulator</title>
+
+	<style type="text/css">
+
+		body, html {
+			padding:0;
+			margin:0;
+
+		}
+
+		textarea, select, input, button, canvas { outline: none; }
+
+
+		@font-face{
+			font-family:"C64 Pro Mono Local";
+			src:url('assets/fonts/C64_Pro_Mono-STYLE.woff2') format("woff2");
+		}
+
+		@font-face{
+			font-family:"C64 Pro Local";
+			src:url('assets/fonts/C64_Pro-STYLE.woff2') format("woff2");
+		}
+
+		.c64pm{
+			font-family: "C64 Pro Mono Local",verdana,helvetica,sans-serif;
+			letter-spacing:0;
+			padding:0;
+			margin:0;
+		}
+
+		pre {
+			font-size: 30px;
+			line-height: 30px;
+			margin: 0;
+			padding: 0 10px;
+		}
+		body {
+			background: #333;
+			color: #ccc;
+			font-family: 'ArialMT', 'Arial', sans-serif;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+
+
+
+		<pre style="float: left;">
+
+
+</pre>
+		<pre id="ascii" class="c64pm" style="float: left;">ASCII
+
+</pre>
+
+
+		<pre style="float: left;">
+
+
+</pre>
+		<pre id="x16" class="c64pm" style="float: left;">PETSCII
+
+</pre>
+
+		<pre style="float: left;">
+
+
+</pre>
+		<pre id="petscii" class="c64pm" style="float: left;">PETSCII FONT
+
+</pre>
+	</div>
+
+</body>
+<script
+		src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha256-pasqAKBDmFT4eHoN2ndd6lN370kFiGUFyTiUHWhU7k8="
+		crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+
+
+    fillTable(0x0ee00,2,'#petscii');
+    fillTable(0x0ee20,2,'#petscii');
+    fillTable(0x0ee40,2,'#petscii');
+    fillTable(0x0ee60,2,'#petscii');
+
+
+    fillTable(0x20,2,'#ascii');
+    fillTable(0x40,2,'#ascii');
+    fillTable(0x60,2,'#ascii');
+    fillTable(0xa0,2,'#ascii');
+
+    fillTable(0x0ee20,2,'#x16');
+    fillTable(0x0ee00,2,'#x16');
+    fillTable(0x0ee40,2,'#x16');
+    fillTable(0x0ee60,2,'#x16');
+
+    function fillTable(start,rows,selector) {
+        let row, col;
+
+        for (row = 0; row < rows; row++) {
+            let rowLabel = start + (row*16);
+
+            $(selector).prev().text($(selector).prev().text()+ (rowLabel).toString(16) + '\n');
+            for (col = 0; col < 16; col++) {
+                let char = start + (row*16) + col;
+                $(selector).text($(selector).text()+String.fromCharCode(char));
+            }
+            $(selector).text($(selector).text()+'\n');
+        }
+        $(selector).text($(selector).text()+'\n');
+        $(selector).prev().text($(selector).prev().text()+'\n');
+	}
+
+</script>
+</html>
+
