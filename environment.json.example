@@ -1,0 +1,20 @@
+{
+  "default": {
+    "db": {
+      "type": "mysql",
+      "host": "localhost",
+      "port": "3306",
+      "database": "x16wide",
+      "user": "x16wide",
+      "password": "PASSWORD"
+    }
+  },
+  "x16.tmp2k.com": {
+    "debug" : 0
+
+  },
+  "x16.tmp2k.com.vm": {
+    "debug" : 1
+
+  }
+}

@@ -143,6 +143,9 @@ if(layouts.includes(lang)) {
 
 
 var Module = {
+    locateFile: function(s) { //this sets the location of the wasm file to run relative to document root
+        return 'library/x16-emulator/latest/' + s;
+    },
     preRun: [
         function() {         //Set the keyboard handling element (it's document by default). Keystrokes are stopped from propagating by emscripten, maybe there's an option to disable this?
             ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "#canvas";

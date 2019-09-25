@@ -193,7 +193,7 @@ Module.expectedDataFileDownloads++;
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 57344, "filename": "/rom.bin"}], "remote_package_size": 57344, "package_uuid": "e06f9627-1be0-49b9-a994-704856babc57"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 57344, "filename": "/rom.bin"}], "remote_package_size": 57344, "package_uuid": "f0845872-a31c-4e9f-aaf5-4558c590a54e"});
 
 })();
 
@@ -1399,11 +1399,11 @@ function updateGlobalBufferAndViews(buf) {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 3776912,
+    STACK_BASE = 3782144,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 9019792,
-    DYNAMIC_BASE = 9019792,
-    DYNAMICTOP_PTR = 3776880;
+    STACK_MAX = 9025024,
+    DYNAMIC_BASE = 9025024,
+    DYNAMICTOP_PTR = 3782112;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -1954,7 +1954,7 @@ function _emscripten_asm_const_iiii(code, a0, a1, a2) {
 
 
 
-// STATICTOP = STATIC_BASE + 3775888;
+// STATICTOP = STATIC_BASE + 3781120;
 /* global initializers */  __ATINIT__.push({ func: function() { ___emscripten_environ_constructor() } });
 
 
@@ -1965,7 +1965,7 @@ function _emscripten_asm_const_iiii(code, a0, a1, a2) {
 
 
 /* no memory initializer */
-var tempDoublePtr = 3776896
+var tempDoublePtr = 3782128
 assert(tempDoublePtr % 8 == 0);
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much

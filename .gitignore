@@ -6,3 +6,7 @@ node_modules
 Thumbs.db
 .htpasswd
 shared-code/*
+environment.json
+public/library/css/frontend.min.css
+public/library/js/frontend-final.min.js
+public/library/version.txt
