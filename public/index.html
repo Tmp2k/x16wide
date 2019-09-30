@@ -37,10 +37,31 @@
                 <div class="close-fullscreen"><a href="javascript:closeFs();" title="Exit fullscreen">&times;</a></div>
 
             </div>
+            <ul class="nav nav-tabs mt-3" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="console-tab" data-toggle="tab" href="#console" role="tab" aria-controls="console" aria-selected="true">Console</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="petscii-tab" data-toggle="tab" href="#petscii" role="tab" aria-controls="petscii" aria-selected="false">PETSCII</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+                </li>
+            </ul>
 
+            <div class="util-layout">
 
-            <div class="output-container">
-                <pre id="output"></pre>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane  show active" id="console" role="tabpanel" aria-labelledby="console-tab">
+                            <pre id="output"></pre>
+                        </div>
+                        <div class="tab-pane " id="petscii" role="tabpanel" aria-labelledby="petscii-tab">
+
+                        </div>
+                        <div class="tab-pane " id="about" role="tabpanel" aria-labelledby="about-tab">
+
+                        </div>
+                    </div>
             </div>
         </div>
 

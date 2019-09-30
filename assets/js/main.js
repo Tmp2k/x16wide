@@ -277,7 +277,8 @@ function openFs(){
 function logOutput(text) {
     if (output) {
         output.innerHTML += text + "\n";
-        output.parentElement.scrollTop = output.parentElement.scrollHeight; // focus on bottom
+        output.parentElement.parentElement.scrollTop = output.parentElement.parentElement.scrollHeight; // TODO - also need to do this when changing back to teh console tab
+
     }
     console.log(text);
 }

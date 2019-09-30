@@ -242,25 +242,47 @@ body {
 
 
 
+.util-layout {
+  flex-grow: 100;
+  position: relative;
 
+  @media screen and (min-width: 900px) {
+    width: 400px;
+  }
 
-.output-container {
-    flex-grow: 100;
-    margin-top: 15px;
-    overflow-x: auto;
-    overflow-y: auto;
-    background: #000;
+  @media screen and (min-width: 1150px) {
+    width: 640px;
+  }
 
+}
 
+.tab-content {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  overflow: auto;
 
 
 }
+
+.tab-content {
+  background: #000;
+}
+
 #output {
 
     margin: 0;
     min-height: 100%;
     height: 70px;
-  color: #999;
+    color: #999;
+
+  overflow: visible;
+
+
+  @media screen and (min-width: 900px) {
+    height: 100%;
+  }
 
 }
 
@@ -337,14 +359,6 @@ body {
 
 
 
-    .output-container {
-        margin-top: 30px;
-        width: 400px;
-    }
-
-    #output {
-        height: auto;
-    }
 
     #code {
         height: auto;
@@ -367,10 +381,7 @@ body {
 
 
 
-    .output-container {
-        margin-top: 30px;
-        width: 640px;
-    }
+
 
 }
 
