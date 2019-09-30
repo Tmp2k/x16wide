@@ -49,6 +49,14 @@ $(function() {
         $('#copy-url').hide();
     }
 
+
+    //startup logo/anim
+    $('#canvas').css('opacity',0);
+
+    setTimeout(function(){
+        $('.butterfly-container').css('opacity',1);
+    },500);
+
 });
 
 function copyUrl() {
@@ -101,6 +109,14 @@ function runCode() {
 
 }
 
+function flyAway() {
+    $('.butterfly').addClass('flying');
+    setTimeout(function(){
+        $('.butterfly').hide();
+        $('#canvas').css('opacity','').focus();
+    },200);
+}
+
 
 //========== LEGACY CODE - TO UPDATE ===============
 
@@ -149,11 +165,13 @@ var Module = {
     preRun: [
         function() {         //Set the keyboard handling element (it's document by default). Keystrokes are stopped from propagating by emscripten, maybe there's an option to disable this?
             ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "#canvas";
+
         }
     ],
     postRun: [
         function () {
-            canvas.focus();
+            flyAway();
+
         }
     ],
     arguments: [    //set key map to user's lang
@@ -186,6 +204,7 @@ var Module = {
         return canvas;
     })(),
     setStatus: function(text) {
+        logOutput(text);
         if (!Module.setStatus.last) Module.setStatus.last = {
             time: Date.now(),
             text: ''
@@ -197,16 +216,15 @@ var Module = {
         Module.setStatus.last.time = now;
         Module.setStatus.last.text = text;
         if (m) {
+
+            const percent = parseInt(m[2]/m[4]) * 100;
+            //alert(m);
+            $('.butterfly .prog').css('height',percent +'%');
             text = m[1];
-            progressElement.value = parseInt(m[2]) * 100;
-            progressElement.max = parseInt(m[4]) * 100;
-            progressElement.hidden = false;
-            spinnerElement.hidden = false;
+            //show loader
         } else {
-            progressElement.value = null;
-            progressElement.max = null;
-            progressElement.hidden = true;
-            if (!text) spinnerElement.hidden = true;
+           //hide
+            if (!text) $('.butterfly').addClass('flying');
         }
         statusElement.innerHTML = text;
         logOutput(text);
@@ -226,7 +244,11 @@ logOutput('Downloading file...');
 
 window.onerror = function() {
     Module.setStatus('Exception thrown, see JavaScript console');
-    spinnerElement.style.display = 'none';
+    // hide loader
+    flyAway();
+    //todo - show static  https://codepen.io/alenaksu/pen/dGjeMZ
+
+
     Module.setStatus = function(text) {
         if (text) Module.printErr('text');
     };

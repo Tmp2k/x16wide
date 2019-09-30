@@ -57,6 +57,7 @@ body {
     float:left;
     margin-top:0;
     display: none;
+    font-size: 30px;
     a {
       color: rgba(40, 116, 180,0.6);
       text-decoration: none;
@@ -83,16 +84,17 @@ body {
 
 .short-url-holder {
   float:right;
-  width:204px;
+  width:214px;
 
   #x16url {
-    width: 165px;
+    width: 175px;
     display: none;
     float: none;
     margin:0;
     background: #fff;
     color: rgb(40, 116, 180);
     padding-left: 5px;
+    font-size: 15px;
   }
 
   #copy-url {
@@ -157,6 +159,9 @@ body {
 .emu-container {
     width:100%;
     text-align: center;
+  position: relative;
+  background: #222;
+
 
   &.fullscreen {
     position: absolute;
@@ -171,8 +176,16 @@ body {
     background: rgb(40, 116, 180);
     z-index: 10;
   }
+  .butterfly-container, #canvas {
 
+    top:0;
+    left:0;
+    width: 100%;
+    height: 100%;
+  }
 }
+
+
 
 
 
@@ -180,8 +193,10 @@ body {
 #canvas {
     width:100%;
     opacity: 0.8;
+    transition: opacity 0.2s;
 
-    &:focus {
+
+  &:focus {
       box-shadow: 0px 0px 5px 0px rgba(40, 116, 180,0.6);
       opacity: 1;
     }
@@ -208,6 +223,8 @@ body {
   #canvas {
     max-height: 90%;
     max-width: 90%;
+
+    position: relative;
 
     width: auto;
     height: 4800px;
@@ -314,14 +331,11 @@ body {
 
     .emu-container {
         width: 400px;
-        height: 300px;
-
-    }
-
-    #canvas {
-        min-width: 400px;
         min-height: 300px;
+
     }
+
+
 
     .output-container {
         margin-top: 30px;
@@ -336,24 +350,125 @@ body {
         height: auto;
         margin-top: 0;
     }
+
+  .butterfly-container, #canvas {
+    position: absolute;
+  }
 }
 
 
 @media screen and (min-width: 1150px) {
     .emu-container {
         width: 640px;
-        height: 480px;
-
-    }
-
-    #canvas {
-        min-width: 640px;
         min-height: 480px;
+
+
     }
+
+
 
     .output-container {
         margin-top: 30px;
         width: 640px;
     }
 
+}
+
+.logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+
+
+
+
+}
+
+.butterfly-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height: 100%;
+}
+
+.butterfly {
+  display: flex;
+  flex-direction: row;
+  z-index: 200;
+
+  &.flying {
+    animation: move 1s linear;
+
+
+    .wing {
+      animation: fly 0.5s infinite;
+
+    }
+  }
+
+
+  .wing {
+    width:115px;
+    height:223px;
+    margin: 7px;
+    animation: resting 5s infinite;
+    position: relative;
+
+
+    &.left {
+      background-image: url('../img/wing-l-grey.png');
+      transform-origin: right;
+      .prog {
+        background-image: url('../img/wing-l.png');
+      }
+    }
+
+    &.right {
+      background-image: url('../img/wing-r-grey.png');
+      transform-origin: left;
+
+      .prog {
+        background-image: url('../img/wing-r.png');
+      }
+    }
+
+    .prog {
+      width: 100%;
+      height: 0%;
+      position: absolute;
+      bottom: 0;
+      background-position: 50% 100%;
+      transition: height 0.5s;
+    }
+  }
+}
+
+@keyframes resting {
+  0% { transform: rotateY(0deg); }
+  20% { transform: rotateY(-20deg); }
+  40% { transform: rotateY(0deg); }
+  70% { transform: rotateY(40deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+@keyframes fly {
+  0% { transform: rotateY(0deg); }
+  50% { transform: rotateY(70deg); }
+  100% { transform: rotateY(0deg); }
+}
+
+@keyframes move {
+  0% {  }
+  50% { transform: rotateX(50deg) rotateZ(30deg) translate3d(150px,-300px,200px); }
+  100% { transform: rotateX(50deg) rotateZ(30deg) translate3d(300px,-600px,200px); }
 }

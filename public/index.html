@@ -23,15 +23,17 @@
         <div class="emu-layout">
 
             <div class="emu-container">
-                <figure style="overflow:visible;" id="spinner">
-                    <div class="spinner"></div>
-                    <strong>emscripten</strong>
-                </figure>
-                <div class="emscripten" id="status">Downloading...</div>
-                <div class="emscripten">
-                    <progress value="0" max="100" id="progress" hidden=1></progress>
+
+                <div class="butterfly-container">
+                    <div class="butterfly">
+                        <div class="wing left"><div class="prog"></div></div>
+                        <div class="wing right"><div class="prog"></div></div>
+                    </div>
+
+                    <div class="emscripten" id="status">Downloading...</div>
+
                 </div>
-                <canvas onclick="this.focus();" tabindex="1" id="canvas" class="" oncontextmenu="event.preventDefault()" ></canvas>
+                <canvas width="640" height="480" onclick="this.focus();" tabindex="1" id="canvas" class="" oncontextmenu="event.preventDefault()" ></canvas>
                 <div class="close-fullscreen"><a href="javascript:closeFs();" title="Exit fullscreen">&times;</a></div>
 
             </div>
