@@ -1,4 +1,60 @@
 const shortUrl = 'https://x16.io';
+const emuVer = 'r33';
+
+// DOM elements
+const statusElement = $('#status');
+const progressElement = $('#progress');
+const spinnerElement = $('#spinner');
+const output = $('#output');
+const canvas = $('#canvas');
+const code = $('#code');
+
+//Emscripten module
+var Module;
+
+
+//detecting keyboard layout...
+
+//define valid layouts (this can be gotten by running the emulator with -keymap)
+const layouts = [
+    'en-us',
+    'en-gb',
+    'de',
+    'nordic',
+    'it',
+    'pl',
+    'hu',
+    'es',
+    'fr',
+    'de-ch',
+    'fr-be',
+    'pt-br'
+];
+
+lang = getFirstBrowserLanguage().toLowerCase().trim();
+
+if(layouts.includes(lang)) {
+    logOutput('Using keyboard map: ' + lang);
+} else {
+    logOutput('Language ('+lang+') not found in keymaps so using keyboard map: en-us');
+    lang = 'en-us';
+}
+
+
+//error logging
+window.onerror = function() {
+    Module.setStatus('Exception thrown, see JavaScript console');
+    // hide loader
+    flyAway();
+    //todo - show static  https://codepen.io/alenaksu/pen/dGjeMZ
+
+
+    Module.setStatus = function(text) {
+        if (text) Module.printErr('text');
+    };
+};
+
+
 
 $(function() {
 
@@ -51,13 +107,113 @@ $(function() {
 
 
     //startup logo/anim
-    $('#canvas').css('opacity',0);
+    //$('#canvas').css('opacity',0);
 
     setTimeout(function(){
         $('.butterfly-container').css('opacity',1);
     },500);
 
+    //launch emulator
+    launchEmulator(emuVer);
+
 });
+
+
+function haltEmulator() {
+    $('.js-emu').remove();
+    Module = null;
+    canvas.fadeOut();
+}
+
+function launchEmulator(version) {
+
+    haltEmulator();
+
+    Module = {
+        locateFile: function(s) { //this sets the location of the wasm file to run relative to document root
+            return 'library/x16-emulator/'+version+'/' + s;
+        },
+        preRun: [
+            function() {         //Set the keyboard handling element (it's document by default). Keystrokes are stopped from propagating by emscripten, maybe there's an option to disable this?
+                ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "#canvas";
+
+            }
+        ],
+        postRun: [
+            function () {
+                flyAway();
+                canvas.fadeIn();
+
+            }
+        ],
+        arguments: [    //set key map to user's lang
+            '-keymap',lang
+        ],
+        print: (function() {
+
+            if (output) output.value = ''; // clear browser cache
+            return function(text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                logOutput(text);
+            };
+        })(),
+        printErr: function(text) {
+            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+
+            logOutput("[error] " + text);
+
+
+        },
+        canvas: (function() {
+
+            // As a default initial behavior, pop up an alert when webgl context is lost. To make your
+            // application robust, you may want to override this behavior before shipping!
+            // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
+            document.getElementById('canvas').addEventListener("webglcontextlost", function(e) {
+                alert('WebGL context lost. You will need to reload the page.');
+                e.preventDefault();
+            }, false);
+            return document.getElementById('canvas');
+        })(),
+        setStatus: function(text) {
+            logOutput(text);
+            if (!Module.setStatus.last) Module.setStatus.last = {
+                time: Date.now(),
+                text: ''
+            };
+            if (text === Module.setStatus.last.text) return;
+            const m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
+            let now = Date.now();
+            if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
+            Module.setStatus.last.time = now;
+            Module.setStatus.last.text = text;
+            if (m) {
+
+                const percent = parseInt(m[2]/m[4]) * 100;
+                //alert(m);
+                $('.butterfly .prog').css('height',percent +'%');
+                text = m[1];
+                //show loader
+            } else {
+                //hide
+                if (!text) $('.butterfly').addClass('flying');
+            }
+            statusElement.innerHTML = text;
+            logOutput(text);
+        },
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+            this.totalDependencies = Math.max(this.totalDependencies, left);
+            Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+    };
+
+    Module.setStatus('Downloading file...');
+    logOutput('Downloading file...');
+
+    $('<script class="js-emu" type="text/javascript" src="/library/x16-emulator/'+version+'/x16emu.js"></script>').appendTo('body');
+
+}
 
 function copyUrl() {
 
@@ -95,16 +251,18 @@ function pfont2ascii(text) {
     for (const c of text) {
 
         if(c.charCodeAt(0) < 0x60) output+= c;
-        if(c.charCodeAt(0) >= 0x0ee40 && c.charCodeAt(0) < 0x0ee60) output+= String.fromCharCode(c.charCodeAt(0)-0x0ede0);
-        if(c.charCodeAt(0) >= 0x0ee60 && c.charCodeAt(0) < 0x0ee80) output+= String.fromCharCode(c.charCodeAt(0)-0x0edc0);
+        if(c.charCodeAt(0) >= 0x0ee40 && c.charCodeAt(0) < 0x0ee60) output+= '\\X'+(c.charCodeAt(0)-0x0ede0).toString(16);
+        if(c.charCodeAt(0) >= 0x0ee60 && c.charCodeAt(0) < 0x0ee80) output+= '\\X'+(c.charCodeAt(0)-0x0edc0).toString(16);
 
     }
+
     return output;
 }
 
 function runCode() {
 
-    Module.ccall("j2c_paste", "void", ["string"], ['\nNEW\n'+ pfont2ascii(code.value) + '\nRUN\n']);
+    //launchEmulator(emuVer);
+    Module.ccall("j2c_paste", "void", ["string"], ['\nNEW\n'+ pfont2ascii(code.val()) + '\nRUN\n']);
     canvas.focus();
 
 }
@@ -118,142 +276,6 @@ function flyAway() {
 }
 
 
-//========== LEGACY CODE - TO UPDATE ===============
-
-
-// DOM elements
-const statusElement = document.getElementById('status');
-const progressElement = document.getElementById('progress');
-const spinnerElement = document.getElementById('spinner');
-const output = document.getElementById('output');
-const canvas = document.getElementById('canvas');
-const code = document.getElementById('code');
-
-//detecting keyboard layout...
-
-//define valid layouts (this can be gotten by running the emulator with -keymap)
-const layouts = [
-    'en-us',
-    'en-gb',
-    'de',
-    'nordic',
-    'it',
-    'pl',
-    'hu',
-    'es',
-    'fr',
-    'de-ch',
-    'fr-be',
-    'pt-br'
-];
-
-lang = getFirstBrowserLanguage().toLowerCase().trim();
-
-if(layouts.includes(lang)) {
-    logOutput('Using keyboard map: ' + lang);
-} else {
-    logOutput('Language ('+lang+') not found in keymaps so using keyboard map: en-us');
-    lang = 'en-us';
-}
-
-
-
-var Module = {
-    locateFile: function(s) { //this sets the location of the wasm file to run relative to document root
-        return 'library/x16-emulator/r32/' + s;
-    },
-    preRun: [
-        function() {         //Set the keyboard handling element (it's document by default). Keystrokes are stopped from propagating by emscripten, maybe there's an option to disable this?
-            ENV.SDL_EMSCRIPTEN_KEYBOARD_ELEMENT = "#canvas";
-
-        }
-    ],
-    postRun: [
-        function () {
-            flyAway();
-
-        }
-    ],
-    arguments: [    //set key map to user's lang
-        '-keymap',lang
-    ],
-    print: (function() {
-
-        if (output) output.value = ''; // clear browser cache
-        return function(text) {
-            if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-            logOutput(text);
-        };
-    })(),
-    printErr: function(text) {
-        if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
-
-        logOutput("[error] " + text);
-
-
-    },
-    canvas: (function() {
-
-        // As a default initial behavior, pop up an alert when webgl context is lost. To make your
-        // application robust, you may want to override this behavior before shipping!
-        // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
-        canvas.addEventListener("webglcontextlost", function(e) {
-            alert('WebGL context lost. You will need to reload the page.');
-            e.preventDefault();
-        }, false);
-        return canvas;
-    })(),
-    setStatus: function(text) {
-        logOutput(text);
-        if (!Module.setStatus.last) Module.setStatus.last = {
-            time: Date.now(),
-            text: ''
-        };
-        if (text === Module.setStatus.last.text) return;
-        const m = text.match(/([^(]+)\((\d+(\.\d+)?)\/(\d+)\)/);
-        let now = Date.now();
-        if (m && now - Module.setStatus.last.time < 30) return; // if this is a progress update, skip it if too soon
-        Module.setStatus.last.time = now;
-        Module.setStatus.last.text = text;
-        if (m) {
-
-            const percent = parseInt(m[2]/m[4]) * 100;
-            //alert(m);
-            $('.butterfly .prog').css('height',percent +'%');
-            text = m[1];
-            //show loader
-        } else {
-           //hide
-            if (!text) $('.butterfly').addClass('flying');
-        }
-        statusElement.innerHTML = text;
-        logOutput(text);
-    },
-    totalDependencies: 0,
-    monitorRunDependencies: function(left) {
-        this.totalDependencies = Math.max(this.totalDependencies, left);
-        Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies - left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
-    }
-};
-
-
-
-
-Module.setStatus('Downloading file...');
-logOutput('Downloading file...');
-
-window.onerror = function() {
-    Module.setStatus('Exception thrown, see JavaScript console');
-    // hide loader
-    flyAway();
-    //todo - show static  https://codepen.io/alenaksu/pen/dGjeMZ
-
-
-    Module.setStatus = function(text) {
-        if (text) Module.printErr('text');
-    };
-};
-
 
 
 function resetEmulator() {
@@ -265,19 +287,19 @@ function resetEmulator() {
 
 
 function closeFs(){
-    canvas.parentElement.classList.remove("fullscreen");
+    canvas.parent().classList.remove("fullscreen");
     canvas.focus();
 }
 
 function openFs(){
-    canvas.parentElement.classList.add("fullscreen");
+    canvas.parent().classList.add("fullscreen");
     canvas.focus();
 }
 
 function logOutput(text) {
     if (output) {
         output.innerHTML += text + "\n";
-        output.parentElement.parentElement.scrollTop = output.parentElement.parentElement.scrollHeight; // TODO - also need to do this when changing back to teh console tab
+        output.parent().parent().scrollTop = output.parent().parent().scrollHeight; // TODO - also need to do this when changing back to teh console tab
 
     }
     console.log(text);

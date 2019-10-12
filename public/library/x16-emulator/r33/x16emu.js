@@ -1,10 +1,3 @@
-
-var x16r32 = (function() {
-  var _scriptDir = typeof document !== 'undefined' && document.currentScript ? document.currentScript.src : undefined;
-  return (
-function(x16r32) {
-  x16r32 = x16r32 || {};
-
 // Copyright 2010 The Emscripten Authors.  All rights reserved.
 // Emscripten is available under two separate licenses, the MIT license and the
 // University of Illinois/NCSA Open Source License.  Both these licenses can be
@@ -23,7 +16,7 @@ function(x16r32) {
 // after the generated code, you will need to define   var Module = {};
 // before the code. Then that object will be used in the code, and you
 // can continue to use Module afterwards as well.
-var Module = typeof x16r32 !== 'undefined' ? x16r32 : {};
+var Module = typeof Module !== 'undefined' ? Module : {};
 
 // --pre-jses are emitted after the Module integration code, so that they can
 // refer to Module (if they choose; they can also define Module)
@@ -200,7 +193,7 @@ Module.expectedDataFileDownloads++;
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 131072, "filename": "/rom.bin"}], "remote_package_size": 131072, "package_uuid": "a89e5deb-ee5e-41c0-846d-fc7b967b5ca0"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 131072, "filename": "/rom.bin"}], "remote_package_size": 131072, "package_uuid": "262b224e-c45a-4d99-b432-89537801c752"});
 
 })();
 
@@ -304,7 +297,9 @@ if (ENVIRONMENT_IS_NODE) {
 
   arguments_ = process['argv'].slice(2);
 
-  // MODULARIZE will export the module in the proper place outside, we don't need to export here
+  if (typeof module !== 'undefined') {
+    module['exports'] = Module;
+  }
 
   process['on']('uncaughtException', function(ex) {
     // suppress ExitStatus exceptions from showing an error
@@ -364,11 +359,6 @@ if (ENVIRONMENT_IS_WEB || ENVIRONMENT_IS_WORKER) {
     scriptDirectory = self.location.href;
   } else if (document.currentScript) { // web
     scriptDirectory = document.currentScript.src;
-  }
-  // When MODULARIZE (and not _INSTANCE), this JS may be executed later, after document.currentScript
-  // is gone, so we saved it, and we use it here instead of any other info.
-  if (_scriptDir) {
-    scriptDirectory = _scriptDir;
   }
   // blob urls look like blob:http://site.com/etc/etc and we cannot infer anything from them.
   // otherwise, slice off the final part of the url to find the script directory.
@@ -1409,11 +1399,11 @@ function updateGlobalBufferAndViews(buf) {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 3839568,
+    STACK_BASE = 1704848,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 9082448,
-    DYNAMIC_BASE = 9082448,
-    DYNAMICTOP_PTR = 3839536;
+    STACK_MAX = 6947728,
+    DYNAMIC_BASE = 6947728,
+    DYNAMICTOP_PTR = 1704816;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -1964,7 +1954,7 @@ function _emscripten_asm_const_iiii(code, a0, a1, a2) {
 
 
 
-// STATICTOP = STATIC_BASE + 3838544;
+// STATICTOP = STATIC_BASE + 1703824;
 /* global initializers */  __ATINIT__.push({ func: function() { ___emscripten_environ_constructor() } });
 
 
@@ -1975,7 +1965,7 @@ function _emscripten_asm_const_iiii(code, a0, a1, a2) {
 
 
 /* no memory initializer */
-var tempDoublePtr = 3839552
+var tempDoublePtr = 1704832
 assert(tempDoublePtr % 8 == 0);
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
@@ -9899,6 +9889,12 @@ var _j2c_reset = Module["_j2c_reset"] = function() {
   return Module["asm"]["_j2c_reset"].apply(null, arguments)
 };
 
+var _j2c_start_audio = Module["_j2c_start_audio"] = function() {
+  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
+  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
+  return Module["asm"]["_j2c_start_audio"].apply(null, arguments)
+};
+
 var _llvm_bswap_i16 = Module["_llvm_bswap_i16"] = function() {
   assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
   assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
@@ -10250,10 +10246,7 @@ if (!Object.getOwnPropertyDescriptor(Module, "getTempRet0")) Module["getTempRet0
 if (!Object.getOwnPropertyDescriptor(Module, "setTempRet0")) Module["setTempRet0"] = function() { abort("'setTempRet0' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };
 if (!Object.getOwnPropertyDescriptor(Module, "callMain")) Module["callMain"] = function() { abort("'callMain' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };
 if (!Object.getOwnPropertyDescriptor(Module, "Pointer_stringify")) Module["Pointer_stringify"] = function() { abort("'Pointer_stringify' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };
-if (!Object.getOwnPropertyDescriptor(Module, "warnOnce")) Module["warnOnce"] = function() { abort("'warnOnce' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };
-if (!Object.getOwnPropertyDescriptor(Module, "writeStackCookie")) Module["writeStackCookie"] = function() { abort("'writeStackCookie' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };
-if (!Object.getOwnPropertyDescriptor(Module, "checkStackCookie")) Module["checkStackCookie"] = function() { abort("'checkStackCookie' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };
-if (!Object.getOwnPropertyDescriptor(Module, "abortStackOverflow")) Module["abortStackOverflow"] = function() { abort("'abortStackOverflow' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };if (!Object.getOwnPropertyDescriptor(Module, "ALLOC_NORMAL")) Object.defineProperty(Module, "ALLOC_NORMAL", { get: function() { abort("'ALLOC_NORMAL' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") } });
+if (!Object.getOwnPropertyDescriptor(Module, "warnOnce")) Module["warnOnce"] = function() { abort("'warnOnce' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") };if (!Object.getOwnPropertyDescriptor(Module, "ALLOC_NORMAL")) Object.defineProperty(Module, "ALLOC_NORMAL", { get: function() { abort("'ALLOC_NORMAL' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") } });
 if (!Object.getOwnPropertyDescriptor(Module, "ALLOC_STACK")) Object.defineProperty(Module, "ALLOC_STACK", { get: function() { abort("'ALLOC_STACK' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") } });
 if (!Object.getOwnPropertyDescriptor(Module, "ALLOC_DYNAMIC")) Object.defineProperty(Module, "ALLOC_DYNAMIC", { get: function() { abort("'ALLOC_DYNAMIC' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") } });
 if (!Object.getOwnPropertyDescriptor(Module, "ALLOC_NONE")) Object.defineProperty(Module, "ALLOC_NONE", { get: function() { abort("'ALLOC_NONE' was not exported. add it to EXTRA_EXPORTED_RUNTIME_METHODS (see the FAQ)") } });
@@ -10263,28 +10256,6 @@ Module["calledRun"] = calledRun;
 
 var calledRun;
 
-// Modularize mode returns a function, which can be called to
-// create instances. The instances provide a then() method,
-// must like a Promise, that receives a callback. The callback
-// is called when the module is ready to run, with the module
-// as a parameter. (Like a Promise, it also returns the module
-// so you can use the output of .then(..)).
-Module['then'] = function(func) {
-  // We may already be ready to run code at this time. if
-  // so, just queue a call to the callback.
-  if (calledRun) {
-    func(Module);
-  } else {
-    // we are not ready to call then() yet. we must call it
-    // at the same time we would call onRuntimeInitialized.
-    var old = Module['onRuntimeInitialized'];
-    Module['onRuntimeInitialized'] = function() {
-      if (old) old();
-      func(Module);
-    };
-  }
-  return Module;
-};
 
 /**
  * @constructor
@@ -10523,16 +10494,3 @@ run();
 
 
 
-
-
-  return x16r32
-}
-);
-})();
-if (typeof exports === 'object' && typeof module === 'object')
-      module.exports = x16r32;
-    else if (typeof define === 'function' && define['amd'])
-      define([], function() { return x16r32; });
-    else if (typeof exports === 'object')
-      exports["x16r32"] = x16r32;
-    

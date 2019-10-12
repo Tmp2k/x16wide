@@ -193,7 +193,7 @@ Module.expectedDataFileDownloads++;
   }
 
  }
- loadPackage({"files": [{"start": 0, "audio": 0, "end": 131072, "filename": "/rom.bin"}], "remote_package_size": 131072, "package_uuid": "ea92190b-4fc4-4f2c-9724-a66a9e55cb90"});
+ loadPackage({"files": [{"start": 0, "audio": 0, "end": 57344, "filename": "/rom.bin"}], "remote_package_size": 57344, "package_uuid": "007a1b28-2dc0-4c48-a168-0b3e1c1a9314"});
 
 })();
 
@@ -1399,11 +1399,11 @@ function updateGlobalBufferAndViews(buf) {
 
 
 var STATIC_BASE = 1024,
-    STACK_BASE = 3839568,
+    STACK_BASE = 1704496,
     STACKTOP = STACK_BASE,
-    STACK_MAX = 9082448,
-    DYNAMIC_BASE = 9082448,
-    DYNAMICTOP_PTR = 3839536;
+    STACK_MAX = 6947376,
+    DYNAMIC_BASE = 6947376,
+    DYNAMICTOP_PTR = 1704464;
 
 assert(STACK_BASE % 16 === 0, 'stack must start aligned');
 assert(DYNAMIC_BASE % 16 === 0, 'heap must start aligned');
@@ -1954,7 +1954,7 @@ function _emscripten_asm_const_iiii(code, a0, a1, a2) {
 
 
 
-// STATICTOP = STATIC_BASE + 3838544;
+// STATICTOP = STATIC_BASE + 1703472;
 /* global initializers */  __ATINIT__.push({ func: function() { ___emscripten_environ_constructor() } });
 
 
@@ -1965,7 +1965,7 @@ function _emscripten_asm_const_iiii(code, a0, a1, a2) {
 
 
 /* no memory initializer */
-var tempDoublePtr = 3839552
+var tempDoublePtr = 1704480
 assert(tempDoublePtr % 8 == 0);
 
 function copyTempFloat(ptr) { // functions, because inlining this code increases code size too much
@@ -9887,6 +9887,12 @@ var _j2c_reset = Module["_j2c_reset"] = function() {
   assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
   assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
   return Module["asm"]["_j2c_reset"].apply(null, arguments)
+};
+
+var _j2c_start_audio = Module["_j2c_start_audio"] = function() {
+  assert(runtimeInitialized, 'you need to wait for the runtime to be ready (e.g. wait for main() to be called)');
+  assert(!runtimeExited, 'the runtime was exited (use NO_EXIT_RUNTIME to keep it alive after main() exits)');
+  return Module["asm"]["_j2c_start_audio"].apply(null, arguments)
 };
 
 var _llvm_bswap_i16 = Module["_llvm_bswap_i16"] = function() {
