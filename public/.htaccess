@@ -25,3 +25,5 @@
 
 
 </IfModule>
+
+AddType application/wasm .wasm

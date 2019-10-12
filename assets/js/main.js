@@ -271,6 +271,7 @@ function flyAway() {
     $('.butterfly').addClass('flying');
     setTimeout(function(){
         $('.butterfly').hide();
+        statusElement.text('');
         $('#canvas').css('opacity','').focus();
     },200);
 }
@@ -298,8 +299,8 @@ function openFs(){
 
 function logOutput(text) {
     if (output) {
-        output.innerHTML += text + "\n";
-        output.parent().parent().scrollTop = output.parent().parent().scrollHeight; // TODO - also need to do this when changing back to teh console tab
+        output.html(output.html() + text + "\n");
+        output.closest('.util-layout').scrollTop = 9999999; // TODO - also need to do this when changing back to teh console tab
 
     }
     console.log(text);
