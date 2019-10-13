@@ -57,88 +57,71 @@
                         </div>
                         <div class="tab-pane " id="petscii" role="tabpanel" aria-labelledby="petscii-tab">
 
-                            <div class="col-xs-12 c64_petscii c64pm">
-
-                                <table cellpadding="0" cellspacing="0" border="0" id="rvsoff-ug" class="matrix  c64_32x32 c64_fg0e c64_bg06">
-                                    <tbody>
-                                        <tr>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td class="">  </td>
-                                            <td>  </td>
-                                            <td class="">  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                        </tr>
-
-                                       <tr>
-                                            <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td> _ </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                           <td>  </td>
-                                       </tr>
-
-                                        <tr>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                            <td>  </td>
-                                        </tr>
-
-                                        </tbody>
-                                </table>
+                            <div class="col-xs-12 c64_petscii c64pm petscii-grid">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                                <div></div>
                             </div>
 
 
@@ -159,7 +142,7 @@
                 <button class="btn btn-primary" role="button" onclick="openFs();" title="Fullscreen"><i class="fas fa-expand"></i></button>
                 <button class="btn btn-primary" role="button" onclick="runCode();" title="Run code"><i class="fas fa-play"></i> </button>
                 <button class="btn btn-primary" role="button" onclick="resetEmulator();" title="Reset emulator"><i class="fas fa-redo"></i></button>
-                <button class="btn btn-primary" role="button" onclick="haltEmulator();" title="Halt emulator"><i class="fas fa-power"></i></button>
+                <!-- <button class="btn btn-primary" role="button" onclick="haltEmulator();" title="Halt emulator"><i class="fas fa-power"></i></button> -->
                 <button class="btn btn-primary" role="button" onclick="shareCode();" id="shareCode" disabled>Share your code <i class="fas fa-share-alt"></i></button>
                 <div class="short-url-holder input-group">
                     <input type="text" id="x16url" readonly/>
@@ -171,6 +154,66 @@
             <div class="editor-middle">
 
                 <textarea id="code" class="c64pm"></textarea>
+                <div id="petscii-keyboard" class="c64pm">
+                    <div class="keyrow">
+                        <div data-code="49" data-pet="" data-pet-shift="">1</div>
+                        <div data-code="50" data-pet="" data-pet-shift="">2</div>
+                        <div data-code="51" data-pet="" data-pet-shift="">3</div>
+                        <div data-code="52" data-pet="" data-pet-shift="">4</div>
+                        <div data-code="53" data-pet="" data-pet-shift="">5</div>
+                        <div data-code="54" data-pet="" data-pet-shift="">6</div>
+                        <div data-code="55" data-pet="" data-pet-shift="">7</div>
+                        <div data-code="56" data-pet="" data-pet-shift="">8</div>
+                        <div data-code="57" data-pet="" data-pet-shift="">9</div>
+                        <div data-code="48" data-pet="" data-pet-shift="">0</div>
+                        <div data-code="189" data-pet="" data-pet-shift="">-</div>
+                        <div data-code="187" data-pet="" data-pet-shift="">=</div>
+                        <div class="spacer key1half">&nbsp</div>
+                    </div>
+                    <div class="keyrow">
+                        <div data-code="81" data-pet="" data-pet-shift="">Q</div>
+                        <div data-code="87" data-pet="" data-pet-shift="">W</div>
+                        <div data-code="69" data-pet="" data-pet-shift="">E</div>
+                        <div data-code="82" data-pet="" data-pet-shift="">R</div>
+                        <div data-code="84" data-pet="" data-pet-shift="">T</div>
+                        <div data-code="89" data-pet="" data-pet-shift="">Y</div>
+                        <div data-code="85" data-pet="" data-pet-shift="">U</div>
+                        <div data-code="73" data-pet="" data-pet-shift="">I</div>
+                        <div data-code="79" data-pet="" data-pet-shift="">O</div>
+                        <div data-code="80" data-pet="" data-pet-shift="">P</div>
+                        <div data-code="219" data-pet="" data-pet-shift="">[</div>
+                        <div data-code="221" data-pet="" data-pet-shift="">]</div>
+                        <div data-code="222" data-pet="" data-pet-shift="">#</div>
+                    </div>
+                    <div class="keyrow">
+                        <div data-code="65" data-pet="" data-pet-shift="">A</div>
+                        <div data-code="83" data-pet="" data-pet-shift="">S</div>
+                        <div data-code="68" data-pet="" data-pet-shift="">D</div>
+                        <div data-code="70" data-pet="" data-pet-shift="">F</div>
+                        <div data-code="71" data-pet="" data-pet-shift="">G</div>
+                        <div data-code="72" data-pet="" data-pet-shift="">H</div>
+                        <div data-code="74" data-pet="" data-pet-shift="">J</div>
+                        <div data-code="75" data-pet="" data-pet-shift="">K</div>
+                        <div data-code="76" data-pet="" data-pet-shift="">L</div>
+                        <div data-code="186" data-pet="" data-pet-shift="">;</div>
+                        <div data-code="192" data-pet="" data-pet-shift="">'</div>
+                        <div class="spacer key1half">&nbsp;</div>
+                    </div>
+                    <div class="keyrow">
+                        <div data-code="90" data-pet="" data-pet-shift="">Z</div>
+                        <div data-code="88" data-pet="" data-pet-shift="">X</div>
+                        <div data-code="67" data-pet="" data-pet-shift="">C</div>
+                        <div data-code="86" data-pet="" data-pet-shift="">V</div>
+                        <div data-code="66" data-pet="" data-pet-shift="">B</div>
+                        <div data-code="78" data-pet="" data-pet-shift="">N</div>
+                        <div data-code="77" data-pet="" data-pet-shift="">M</div>
+                        <div data-code="188" data-pet="" data-pet-shift="">,</div>
+                        <div data-code="190" data-pet="" data-pet-shift="">.</div>
+                        <div data-code="191" data-pet="" data-pet-shift="">/</div>
+                        <div class="spacer key1half">&nbsp;</div>
+                    </div>
+
+                </div>
 
             </div>
 

@@ -3,6 +3,11 @@ $font-family-sans-serif: 'Montserrat', sans-serif;
 $border-radius: 0;
 
 $primary:rgba(40, 116, 180,1);
+$ideBg:#333;
+$petsciiKeySize: 40px;
+$petsciiKeySizeSm: 50px;
+
+
 
 
 //import bootstrap
@@ -24,7 +29,7 @@ body, html {
 textarea, select, input, button, canvas { outline: none; }
 
 body {
-    background: #333;
+    background: $ideBg;
     color: #ccc;
     font-family: 'ArialMT', 'Arial', sans-serif;
 }
@@ -70,7 +75,9 @@ body {
     }
   }
 
-
+  .btn {
+    margin-bottom: 10px;
+  }
 
 
   input {
@@ -113,6 +120,7 @@ body {
 .editor-middle {
     flex-grow: 100;
     display: flex;
+  position: relative;
 }
 
 
@@ -138,6 +146,57 @@ body {
     opacity: 1;
   }
 
+}
+
+$vkbSize: 6vmin;
+
+#petscii-keyboard {
+  position: absolute;
+  bottom: 15px;
+  width:100%;
+  display: none;
+
+  .keyrow {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    div {
+      width:$vkbSize;
+      height:$vkbSize;
+      line-height: $vkbSize*0.5;
+      text-align: center;
+      border:1px solid #999;
+      color: #999;
+      font-size: $vkbSize*0.33;
+      background: #333;
+
+
+      &.key1half {
+        width:$vkbSize*1.5;
+        border: 0;
+      }
+
+      &.spacer {
+        background: none;
+      }
+
+      &.pressed {
+        background: $primary;
+      }
+
+      span {
+        font-size: $vkbSize*0.3;
+        color: #555;
+        display: inline-block;
+        margin: 0 4px;
+
+        &.sel {
+          color: #fff;
+        }
+      }
+    }
+  }
 }
 
 
@@ -383,6 +442,43 @@ body {
 
 
 
+}
+
+
+
+#petscii {
+  background: $ideBg;
+  height: 100%;
+}
+
+.petscii-grid {
+  background: $primary;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  > div {
+    width:$petsciiKeySizeSm;
+    height:$petsciiKeySizeSm;
+    font-size: $petsciiKeySizeSm*0.9;
+    line-height: $petsciiKeySizeSm;
+
+    text-align: center;
+    border: 1px solid $ideBg;
+    cursor: pointer;
+
+    @media screen and (min-width: 1150px) {
+      width:$petsciiKeySize;
+      height:$petsciiKeySize;
+      font-size: $petsciiKeySize*0.9;
+      line-height: $petsciiKeySize;
+    }
+
+    &:hover {
+      color: #fff;
+    }
+  }
 }
 
 .logo-container {

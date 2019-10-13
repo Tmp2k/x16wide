@@ -1,6 +1,9 @@
 const shortUrl = 'https://x16.io';
 const emuVer = 'r33';
 
+let lastPress = null;
+let vkbPersist = false;
+
 // DOM elements
 const statusElement = $('#status');
 const progressElement = $('#progress');
@@ -57,6 +60,94 @@ window.onerror = function() {
 
 
 $(function() {
+
+    //populate PETSCII keyboard
+    $('#petscii-keyboard .keyrow div:not(.spacer)').each(function(index,item){
+        const key = $(item);
+        key.html(key.html() +'<br><span class="pet">'+ key.data('pet') +'</span><span class="pet-shift">'+key.data('pet-shift') +'</span>');
+    });
+
+    $(document).keydown(function(e){
+
+        lastPress = e.keyCode;
+
+        //if shift key pressed hilight correct PETs
+        if(!e.shiftKey) {
+            $('.pet').addClass('sel');
+            $('.pet-shift').removeClass('sel');
+        } else {
+            $('.pet').removeClass('sel');
+            $('.pet-shift').addClass('sel');
+        }
+
+        //if alt then show virtual kb
+        if((e.altKey || vkbPersist) && code.is(":focus")) {
+
+            $('#petscii-keyboard').show();
+
+            const vKey = $('#petscii-keyboard div[data-code="'+e.keyCode+'"]');
+
+            if(vKey.length) {
+                e.preventDefault();
+
+                //hilight key as pressed
+                vKey.addClass('pressed');
+                if(e.shiftKey) {
+                    insertChars(vKey.data('pet-shift'));
+                } else {
+                    insertChars(vKey.data('pet'));
+                }
+            }
+        }
+
+        //TODO - intercept all keydowns on #code and reaplce with uppercase letters etc. (need to work out mappings)
+
+        if(e.altKey && canvas.is(":focus")) {
+            //stop ALTs from escaping the emulator
+            e.preventDefault();
+        }
+
+
+    });
+
+    $(document).keyup(function(e){
+
+        //persist vkb
+        if (lastPress === 18) vkbPersist = !vkbPersist;
+
+        //unhilight pressed keys
+        $('#petscii-keyboard .pressed').removeClass('pressed');
+
+        //if shift key pressed hilight correct PETs
+        if(!e.shiftKey) {
+            $('.pet').addClass('sel');
+            $('.pet-shift').removeClass('sel');
+        } else {
+            $('.pet').removeClass('sel');
+            $('.pet-shift').addClass('sel');
+        }
+
+        //if alt then show/hide virtual kb
+        if(!e.altKey) {
+            e.preventDefault();
+            if(!vkbPersist) $('#petscii-keyboard').hide();
+
+        }
+    });
+
+    $('.petscii-grid > div').mousedown(function(e){
+        e.preventDefault();
+
+        if(code.is(":focus")) {
+
+            insertChars($(this).text().trim());
+
+        } else if (canvas.is(":focus")) {
+            Module.ccall("j2c_paste", "void", ["string"], [pfont2ascii($(this).text().trim())]);
+            canvas.focus();
+        }
+
+    });
 
     $('#code').change(function(){
         const selectionStart = $(this).prop('selectionStart');
@@ -115,6 +206,15 @@ $(function() {
 
     //launch emulator
     launchEmulator(emuVer);
+
+
+
+    //window resize
+    $(window).resize(function(){
+        //Window resize code here...
+
+    });
+    $(window).resize();
 
 });
 
@@ -259,6 +359,16 @@ function pfont2ascii(text) {
     return output;
 }
 
+function insertChars(chars) {
+    const selectionStart = code.prop('selectionStart');
+    const selectionEnd = code.prop('selectionEnd');
+
+    code.val($('#code').val().substring(0, selectionStart) + chars + code.val().substring(selectionEnd));
+
+    code.prop('selectionStart', selectionStart + chars.length).prop('selectionEnd', selectionStart + chars.length);
+    code.focus();
+}
+
 function runCode() {
 
     //launchEmulator(emuVer);
@@ -288,12 +398,12 @@ function resetEmulator() {
 
 
 function closeFs(){
-    canvas.parent().classList.remove("fullscreen");
+    canvas.parent().removeClass("fullscreen");
     canvas.focus();
 }
 
 function openFs(){
-    canvas.parent().classList.add("fullscreen");
+    canvas.parent().addClass("fullscreen");
     canvas.focus();
 }
 
