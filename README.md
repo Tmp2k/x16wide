@@ -1,7 +1,7 @@
 # X16WIDE
 *a web IDE for Commander X16*
 
-Early demo here -> https://x16wide.tmp2k.com
+Early demo here -> https://x16.tmp2k.com
 
 ## What is the aim of this project?
 
@@ -21,10 +21,10 @@ To provide a development environment that:
     * structure highlighting and folding
     * context menus
     * remuneration and formatting tools
-    * PETSCII char keyboard
+    * PETSCII char keyboard *done*
   * Built in compilers/assemblers - write code in interpreted BASIC, compiled BASIC, asm or other high-level languages like C
   * Multiple tabs/files for includes
-  * Ability to share code with a single URL
+  * Ability to share code with a single URL *done*
   * Repository of demos, tutorials and examples
   * Shared public code repository / library
   * Image/sprite editor with export to bin files or automatic inclusion in code
@@ -33,13 +33,13 @@ To provide a development environment that:
   
   ## Roadmap
   
-  ### Now: Gauge interest / select features
+  ### Done: Gauge interest / select features
   See who's on board and what the community want's from this project. If you're interested in working on this please drop me an email on steven@nemiah.uk. Anyone with experience with emscripten would be a huge bonus!
   
-  ### Then: Build BASIC only version without compilers
+  ### Done: Build BASIC only version without compilers
   Build a version that just allows people to code in BASIC but includes examples and demos and allows people to share their own code with a single click.
   
-  ### Then: add the ability to load .prg 
+  ### Now: add the ability to load .prg 
   
   ### Then: add assemblers/compilers and support for ASM, C etc
   
