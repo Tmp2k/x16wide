@@ -166,8 +166,8 @@ $vkbSize: 6vmin;
       height:$vkbSize;
       line-height: $vkbSize*0.5;
       text-align: center;
-      border:1px solid #999;
-      color: #999;
+      border:1px solid #666;
+      color: #666;
       font-size: $vkbSize*0.33;
       background: #333;
       margin: 2px;
@@ -189,12 +189,15 @@ $vkbSize: 6vmin;
 
       span {
         font-size: $vkbSize*0.3;
+        line-height: $vkbSize*0.3;
         color: #555;
         display: inline-block;
         margin: 0 4px;
+        border:1px solid #555;
 
         &.sel {
           color: #fff;
+          border-color: #fff;
         }
       }
     }

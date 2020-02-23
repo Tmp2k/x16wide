@@ -113,9 +113,9 @@
             $(selector).prev().text($(selector).prev().text()+ (rowLabel).toString(16) + '\n');
             for (col = 0; col < 16; col++) {
                 let char = start + (row*16) + col;
-                $(selector).text($(selector).text()+String.fromCharCode(char));
+                $(selector).text($(selector).text()+String.fromCharCode(char)+' ');
             }
-            $(selector).text($(selector).text()+'\n');
+            $(selector).text($(selector).text()+'\n\n');
         }
         $(selector).text($(selector).text()+'\n');
         $(selector).prev().text($(selector).prev().text()+'\n');

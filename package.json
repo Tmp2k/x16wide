@@ -1,6 +1,6 @@
 {
   "name": "x16wide",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "X16 WIDE",
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.11.2",
