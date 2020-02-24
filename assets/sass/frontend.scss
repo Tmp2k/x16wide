@@ -135,7 +135,7 @@ body {
     color: #999;
     resize: none;
     font-size: 13px;
-    line-height: 1.3;
+    line-height: 1.0;
     opacity: 0.8;
     height: 85vh;
 
@@ -166,7 +166,7 @@ $vkbSize: 6vmin;
       height:$vkbSize;
       line-height: $vkbSize*0.5;
       text-align: center;
-      border:1px solid #666;
+      border:1px solid #444;
       color: #666;
       font-size: $vkbSize*0.33;
       background: #333;
@@ -197,7 +197,7 @@ $vkbSize: 6vmin;
 
         &.sel {
           color: #fff;
-          border-color: #fff;
+          border-color: $primary;
         }
       }
     }

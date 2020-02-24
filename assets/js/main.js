@@ -64,7 +64,9 @@ $(function() {
     //populate PETSCII keyboard
     $('#petscii-keyboard .keyrow div:not(.spacer)').each(function(index,item){
         const key = $(item);
-        key.html(key.html() +'<br><span class="pet">'+ key.data('pet') +'</span><span class="pet-shift">'+key.data('pet-shift') +'</span>');
+        key.html(key.html() +'<br>');
+        if(key.data('pet')) key.html(key.html() +'<span class="pet">'+ key.data('pet') +'</span>');
+        if(key.data('pet-shift')) key.html(key.html() +'<span class="pet-shift">'+key.data('pet-shift') +'</span>');
     });
 
     $(document).keydown(function(e){
