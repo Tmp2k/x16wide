@@ -1,5 +1,5 @@
 const shortUrl = 'https://x16.io';
-const emuVer = 'r33';
+const emuVer = 'latest';
 
 let lastPress = null;
 let vkbPersist = false;
